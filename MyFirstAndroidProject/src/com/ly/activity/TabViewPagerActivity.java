@@ -21,12 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ly.R;
-import com.ly.adapter.MyFragmentPaperAdapter;
 import com.ly.adapter.TabAdapter;
 import com.ly.fragment.HomeFragment;
 import com.ly.fragment.PhoneFragment;
 import com.ly.fragment.WeChatFragment;
-import com.viewpagerindicator.TabPageIndicator;
 
 public class TabViewPagerActivity extends FragmentActivity implements OnClickListener, OnPageChangeListener{
 
@@ -39,7 +37,7 @@ public class TabViewPagerActivity extends FragmentActivity implements OnClickLis
 	private ViewPager viewPager;
 	private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
 	
-	private TabPageIndicator tabPageIndicator;
+	//private TabPageIndicator tabPageIndicator;
 	private FragmentPagerAdapter tabAdapter;
 	
 	@Override
@@ -73,7 +71,7 @@ public class TabViewPagerActivity extends FragmentActivity implements OnClickLis
 		wechattTextView = (TextView) findViewById(R.id.wechat_text);
 		phoneTextView = (TextView) findViewById(R.id.phone_text);
 		
-		tabPageIndicator = (TabPageIndicator) findViewById(R.id.page_indicator);
+		//tabPageIndicator = (TabPageIndicator) findViewById(R.id.page_indicator);
 	}
 
 	private void initTab(){
@@ -102,8 +100,8 @@ public class TabViewPagerActivity extends FragmentActivity implements OnClickLis
 		viewPager.setAdapter(tabAdapter);
 		//viewPager.setCurrentItem(0);
 		//viewPager.setOnPageChangeListener(this);
-		tabPageIndicator.setViewPager(viewPager);
-		tabPageIndicator.setOnClickListener(this);
+		//tabPageIndicator.setViewPager(viewPager);
+		//tabPageIndicator.setOnClickListener(this);
 
 	}
 
