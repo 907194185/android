@@ -1,8 +1,6 @@
 package com.ly.fragment;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -23,8 +21,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ly.R;
+import com.ly.activity.SelectPicPopupWindowActivity;
 import com.ly.po.FormFile;
 import com.ly.utils.UploadFileUtil;
 
@@ -50,10 +50,8 @@ public class WeChatFragment extends Fragment implements OnClickListener{
 	public void initUI(){
 		button = (Button) view.findViewById(R.id.bj_photo);
 		uploadBtn = (Button) view.findViewById(R.id.upload_btn);
-		cameraBtn = (Button) view.findViewById(R.id.camera_photo);
 		imageView = (ImageView) view.findViewById(R.id.img_prev);
 		button.setOnClickListener(this);
-		uploadBtn.setOnClickListener(this);
 		uploadBtn.setOnClickListener(this);
 	}
 
@@ -61,7 +59,8 @@ public class WeChatFragment extends Fragment implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.bj_photo:
-			getImageFromAlbum();
+			//getImageFromAlbum();
+			startActivityForResult(new Intent(getActivity(), SelectPicPopupWindowActivity.class), REQUEST_IMAGE_CODE);
 			break;
 		case R.id.upload_btn:
 			UploadFileUtil uploadFileUtil = new UploadFileUtil();
@@ -80,9 +79,6 @@ public class WeChatFragment extends Fragment implements OnClickListener{
 				e.printStackTrace();
 				Log.i("upload",e.getMessage());
 			}
-			break;
-		case R.id.camera_photo:
-
 			break;
 		default:
 			break;
@@ -106,16 +102,18 @@ public class WeChatFragment extends Fragment implements OnClickListener{
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			tempFile = new File(Environment.getExternalStorageDirectory(),
 					PHOTO_FILE_NAME);
+			Log.i("WeChat","====ddd==222222222");
 			// 从文件中创建uri
 			Uri uri = Uri.fromFile(tempFile);
 			intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 		}
+		Log.i("WeChat","====ddd==33333333333");
 		// 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
 		startActivityForResult(intent, 1);
 	}
 
 
-	@Override
+	/*@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.i("WeChat",requestCode + "=====" + resultCode);
 		if (requestCode == REQUEST_IMAGE_CODE) {
@@ -137,6 +135,37 @@ public class WeChatFragment extends Fragment implements OnClickListener{
 				bitmap = BitmapFactory.decodeStream(new FileInputStream(tempFile));
 				imageView.setImageBitmap(bitmap);
 			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}*/
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.i("WeChat",requestCode + "=====" + resultCode);
+		if (requestCode == REQUEST_IMAGE_CODE && resultCode == 0) {
+			Log.i("WeChat","=====11111111111" );
+			if (data != null) {
+				Log.i("WeChat","=====22222222222" );
+				imageView.setImageURI(data.getData());
+				ContentResolver cr = getActivity().getContentResolver();  
+				Cursor c = cr.query(data.getData(), null, null, null, null);  
+				c.moveToFirst();  
+				//这是获取的图片保存在sdcard中的位置  
+				srcPath = c.getString(c.getColumnIndex("_data"));  
+				System.out.println(srcPath+"----------保存路径2"); 
+				Log.i("WeChat","=====22222222222"+ srcPath );
+			}
+		}else if (requestCode == REQUEST_IMAGE_CODE && resultCode == 1) {
+			Bitmap bitmap;
+			try {
+				Toast.makeText(getActivity(),data.getExtras().getString("filepath"), Toast.LENGTH_SHORT).show();
+				bitmap = BitmapFactory.decodeFile(data.getExtras().getString("filepath"));
+				imageView.setImageBitmap(bitmap);
+				//imageView.setImageURI(data.getData());
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

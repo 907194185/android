@@ -8,19 +8,13 @@
         android:id="@+id/bj_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="本机相册" >
-    </Button>
-    <Button
-        android:id="@+id/camera_photo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="相机" >
+        android:text="选择图片" >
     </Button>
     
     <ImageView 
         android:id="@+id/img_prev"
         android:layout_width="match_parent"
-        android:layout_height="100dp"/>
+        android:layout_height="500dp"/>
     <Button 
         android:id="@+id/upload_btn"
         android:layout_width="match_parent"
