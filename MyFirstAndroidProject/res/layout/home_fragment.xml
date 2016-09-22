@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/home_tab_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:gravity="center_vertical">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/home_all_text" />
+
+            <View
+                android:id="@+id/tab_all_line"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@id/all"
+                android:background="#0000ff" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/not_get_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/home_not_get_in_text" />
+
+            <View
+                android:id="@+id/not_get_in_line"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@id/not_get_in" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/get_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/home_get_in_text" />
+
+            <View
+                android:id="@+id/get_in_line"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@id/get_in" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/receive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/home_receive_text" />
+
+            <View
+                android:id="@+id/receive_line"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_below="@id/receive" />
+        </RelativeLayout>
+        
+        <ImageView 
+            android:id="@+id/home_search"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:src="@drawable/search"
+            android:layout_weight="0.8"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/tab_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_below="@id/home_tab_ll"
+        android:background="#FFC1C1" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/home_fragmentVP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tab_line" >
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>

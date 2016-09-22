@@ -1,0 +1,138 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <!-- 头部 -->
+
+        <RelativeLayout
+            android:id="@+id/top_tab"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:background="#c43737" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="头部文字"
+                android:textColor="#ffffff"
+                android:textSize="20dip" />
+        </RelativeLayout>
+
+        <!-- 底部 -->
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_alignParentBottom="true"
+            android:background="#EAEAEA"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:id="@+id/home_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/home_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/home" />
+
+                <TextView
+                    android:id="@+id/home_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/home_img"
+                    android:layout_centerHorizontal="true"
+                    android:text="首页"
+                    android:textColor="#000000" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/wechat_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/wechat_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/wechat" />
+
+                <TextView
+                    android:id="@+id/wechat_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wechat_img"
+                    android:layout_centerHorizontal="true"
+                    android:text="微信"
+                    android:textColor="#000000" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/phone_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/phone_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/phone" />
+
+                <TextView
+                    android:id="@+id/phone_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_img"
+                    android:layout_centerHorizontal="true"
+                    android:text="电话"
+                    android:textColor="#000000" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!--
+        fragment内容
+        <LinearLayout 
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_above="@id/ll_bottom"
+            android:layout_below="@id/top_tab">
+           
+        </LinearLayout>
+        -->
+
+        <com.viewpagerindicator.TabPageIndicator
+            android:id="@+id/page_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_tab"
+            android:background="#436EEE" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/fragmentVP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ll_bottom"
+            android:layout_below="@id/page_indicator" >
+        </android.support.v4.view.ViewPager>
+    </RelativeLayout>
+
+</FrameLayout>
