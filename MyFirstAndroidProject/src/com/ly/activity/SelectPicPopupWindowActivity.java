@@ -4,18 +4,19 @@ import java.io.File;
 import java.io.IOException;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,9 +25,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.ly.R;
+import com.ly.constant.Constant;
 
 public class SelectPicPopupWindowActivity extends Activity implements OnClickListener{
-	
+
 	LinearLayout layout;
 	Button bjBtn, cameraBtn, cancelBtn;
 	private String srcPath;
@@ -35,20 +37,20 @@ public class SelectPicPopupWindowActivity extends Activity implements OnClickLis
 	private static final int REQUEST_IMAGE_CODE = 0;
 	private static final int REQUEST_CAMERA_CODE = 1;
 	private String filepath;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.popupwindow);
 		initUI();
 	}
-	
+
 	public void initUI(){
 		layout = (LinearLayout) this.findViewById(R.id.pop_layout);
 		bjBtn = (Button) this.findViewById(R.id.pop_btn1);
 		cameraBtn = (Button) this.findViewById(R.id.pop_btn2);
 		cancelBtn = (Button) this.findViewById(R.id.pop_cancel);
-		
+
 		layout.setOnClickListener(this);
 		bjBtn.setOnClickListener(this);
 		cameraBtn.setOnClickListener(this);
@@ -67,7 +69,7 @@ public class SelectPicPopupWindowActivity extends Activity implements OnClickLis
 		case R.id.pop_btn2:
 			try {
 				camera(v);
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -78,17 +80,17 @@ public class SelectPicPopupWindowActivity extends Activity implements OnClickLis
 		default:
 			break;
 		}
-		
+
 	}
-	
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		finish();
 		return true;
 	}
-	
-	
-	
+
+
+
 	protected void getImageFromAlbum() {  
 		Intent intent = new Intent(Intent.ACTION_PICK);  
 		intent.setType("image/*");//相片类型  
@@ -98,48 +100,93 @@ public class SelectPicPopupWindowActivity extends Activity implements OnClickLis
 	/*
 	 * 从相机获取
 	 */
-	public void camera(View view) throws IOException {
-		// 激活相机
-		Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+
+	public void camera(View view) throws Exception {
+		//takePhoto();
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+			ActivityCompat.requestPermissions(this, 
+					new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+		}else {
+			takePhoto();
+		}
+
+
+	}
+
+	public void takePhoto(){
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		// 判断存储卡是否可以用，可用进行存储
 		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			filepath = Environment.getExternalStorageDirectory() + "/myimage/" + System.currentTimeMillis()+".jpg";
-			tempFile = new File(filepath);  
-            if (!tempFile.exists()) {  
-            	tempFile.createNewFile();  
-            }  
-			Log.i("WeChat","====ddd==222222222");
+			//File dir = this.getExternalFilesDir("/myimage/");
+			//公共储存
+			filepath = Environment.getExternalStorageDirectory().getAbsolutePath() + Constant.IMG_DIR;
+			//tempFile = new File(dir, System.currentTimeMillis()+".jpg");
+			
+			//filepath = tempFile.getPath();
+			File imgDir = new File(filepath);
+			if (!imgDir.exists()) {
+				imgDir.mkdir();
+			}
+			filepath = filepath + System.currentTimeMillis()+".jpg";
+			tempFile = new File(filepath);
+			if (!tempFile.exists()) {  
+				try {
+					tempFile.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+					Toast.makeText(this, "error="+e.getMessage(), Toast.LENGTH_LONG).show();
+				}  
+			}  
 			// 从文件中创建uri
 			Uri uri = Uri.fromFile(tempFile);
 			intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 		}
-		Log.i("WeChat","====ddd==33333333333");
 		// 开启一个带有返回值的Activity，请求码为PHOTO_REQUEST_CAREMA
 		startActivityForResult(intent, REQUEST_CAMERA_CODE);
+		//}
+
 	}
 
+	/**
+	 * android6.0 以上动态请求权限回调
+	 */
+	@TargetApi(23)
+	@Override
+	public void onRequestPermissionsResult(int requestCode,
+			String[] permissions, int[] grantResults) {
+		// TODO Auto-generated method stub
+		if (requestCode == 1) {
+			if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+				try {
+					takePhoto();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				Toast.makeText(this, "permission denied", Toast.LENGTH_SHORT).show();
+			}
+			return;
+		}
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.i("WeChat",requestCode + "=====" + resultCode);
 		if (requestCode == REQUEST_IMAGE_CODE) {
-			Log.i("WeChat","=====11111111111" );
 			if (data != null) {
-				Log.i("WeChat","=====22222222222" );
 				//imageView.setImageURI(data.getData());
 				ContentResolver cr = SelectPicPopupWindowActivity.this.getContentResolver();  
 				Cursor c = cr.query(data.getData(), null, null, null, null);  
 				c.moveToFirst();  
 				//这是获取的图片保存在sdcard中的位置  
 				srcPath = c.getString(c.getColumnIndex("_data"));  
-				System.out.println(srcPath+"----------保存路径2"); 
 				Intent result = new Intent();
 				Bundle bundle = new Bundle();
 				bundle.putString("srcPath", srcPath);
 				result.putExtras(bundle);
-				
+
 				setResult(0, data);
-				Log.i("WeChat","=====22222222222"+ srcPath );
 				finish();
 			}
 		}else if (requestCode == 1) {
@@ -159,7 +206,6 @@ public class SelectPicPopupWindowActivity extends Activity implements OnClickLis
 					e.printStackTrace();
 				}
 			}else {
-				Toast.makeText(SelectPicPopupWindowActivity.this,"data is null", Toast.LENGTH_LONG).show();
 				Bundle bundle = new Bundle();
 				bundle.putString("filepath", filepath);
 				data = new Intent();
@@ -167,12 +213,12 @@ public class SelectPicPopupWindowActivity extends Activity implements OnClickLis
 				setResult(1, data);
 				finish();
 			}
-			
-			
+
+
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	
+
 
 }

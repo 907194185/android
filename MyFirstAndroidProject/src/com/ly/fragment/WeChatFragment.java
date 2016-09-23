@@ -4,11 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import android.R.integer;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,13 +34,17 @@ import com.ly.utils.UploadFileUtil;
 
 public class WeChatFragment extends Fragment implements OnClickListener{
 
-	private Button button, uploadBtn, cameraBtn;
+	private Button button, uploadBtn, cameraBtn, netWrokBtn;
 	private ImageView imageView;
 	private View view;
 	private static final int REQUEST_IMAGE_CODE = 0;
 	private String srcPath;
 	private File tempFile;
 	private String PHOTO_FILE_NAME = "BB.jpg";
+	
+	private static final int NETWORK_WIFI = 1;
+	private static final int NETWORK_CMWAP = 2;
+	private static final int NETWORK_CMNET = 3;
 
 
 	@Override
@@ -51,8 +59,11 @@ public class WeChatFragment extends Fragment implements OnClickListener{
 		button = (Button) view.findViewById(R.id.bj_photo);
 		uploadBtn = (Button) view.findViewById(R.id.upload_btn);
 		imageView = (ImageView) view.findViewById(R.id.img_prev);
+		netWrokBtn = (Button) view.findViewById(R.id.net_status_btn);
+		
 		button.setOnClickListener(this);
 		uploadBtn.setOnClickListener(this);
+		netWrokBtn.setOnClickListener(this);
 	}
 
 	@Override
@@ -79,6 +90,9 @@ public class WeChatFragment extends Fragment implements OnClickListener{
 				e.printStackTrace();
 				Log.i("upload",e.getMessage());
 			}
+			break;
+		case R.id.net_status_btn:
+			getNetwork();
 			break;
 		default:
 			break;
@@ -173,4 +187,35 @@ public class WeChatFragment extends Fragment implements OnClickListener{
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+	
+	
+	public int getNetwork(){
+		int netType = 0;
+		ConnectivityManager manager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo info = manager.getActiveNetworkInfo();
+		if (info == null) {
+			Toast.makeText(getActivity(), "无网络连接！", Toast.LENGTH_SHORT).show();
+			return netType;
+		}
+		netType = info.getType();
+		if (netType == ConnectivityManager.TYPE_MOBILE) {
+			String extraInfo = info.getExtraInfo();
+			if (!extraInfo.isEmpty()) {
+				if (extraInfo.toLowerCase().equals("cmnet")) {
+					Toast.makeText(getActivity(), "cmnet连接！", Toast.LENGTH_SHORT).show();
+					netType = NETWORK_CMNET;
+				}else {
+					Toast.makeText(getActivity(), "cmwap连接！", Toast.LENGTH_SHORT).show();
+					netType = NETWORK_CMWAP;
+				}
+			}
+			
+		}else if (netType == ConnectivityManager.TYPE_WIFI) {
+			Toast.makeText(getActivity(), "Wifi连接！", Toast.LENGTH_SHORT).show();
+			netType = NETWORK_WIFI;
+		}
+		return netType;
+	}
+	
+	
 }

@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <Button 
+        android:id="@+id/net_status_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="当前网络状态"/>
     <Button
         android:id="@+id/bj_photo"
         android:layout_width="match_parent"
@@ -14,11 +19,12 @@
     <ImageView 
         android:id="@+id/img_prev"
         android:layout_width="match_parent"
-        android:layout_height="500dp"/>
+        android:layout_height="wrap_content"/>
     <Button 
         android:id="@+id/upload_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="上传"/>
+    
 
 </LinearLayout>
