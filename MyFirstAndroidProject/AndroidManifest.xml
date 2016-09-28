@@ -51,7 +51,7 @@
 
         <!-- WelcomeActivity -->
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,6 +72,10 @@
             android:label="@string/app_name"
             android:theme="@style/MyDialogStyleBottom" >
         </activity>
+        <!-- <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/app_name" >
+        </activity> -->
 
         <service
             android:name="com.baidu.location.f"
