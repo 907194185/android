@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="     
+          http://www.springframework.org/schema/beans     
+          classpath:org/springframework/beans/factory/xml/spring-beans-4.2.xsd   
+          http://www.springframework.org/schema/tx
+          classpath:org/springframework/transaction/config/spring-tx-4.1.xsd    
+          http://www.springframework.org/schema/context     
+          classpath:org/springframework/context/config/spring-context-4.2.xsd     
+          http://www.springframework.org/schema/aop     
+          classpath:org/springframework/aop/config/spring-aop-4.1.xsd
+          http://www.springframework.org/schema/task
+       	  classpath:org/springframework/scheduling/config/spring-task-4.2.xsd"
+	default-autowire="byName">
+
+	
+  	<!-- 自动扫描组件,在applicationContext中可以扫描所有其他带有注解的类（也可以过滤掉带@Controller注解的类）,在spring-servlet.xml也要配置一次,两次配置的区别,包名不一样,这个操作为解决与事物的冲突 -->
+	<context:component-scan base-package="com.gykj" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+	<!-- 导入mongodb的配置文件 -->
+    <import resource="mongodb-context.xml"/>
+	
+	<!-- 开启定时器这个配置，spring才能识别@Scheduled注解  
+    <task:annotation-driven />--> 
+	    
+</beans>

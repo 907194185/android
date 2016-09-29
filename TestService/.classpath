@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_6_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="libs/mongodb3.0/mongo-java-driver-3.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/mongodb3.0/spring-data-commons-1.10.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/mongodb3.0/spring-data-commons-core-1.4.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/aopalliance.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/aspectjweaver-1.6.9.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/commons-beanutils-1.9.2.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/commons-dbutils-1.6.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/commons-fileupload-1.3.1.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/commons-lang-2.6.jar" sourcepath="C:/Users/xianyl/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6-sources.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/jackson-annotations-2.6.0.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/jackson-core-2.6.4.jar" sourcepath="D:/maven/repository/com/fasterxml/jackson/core/jackson-core/2.6.4/jackson-core-2.6.4-sources.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/jackson-databind-2.6.4.jar" sourcepath="D:/maven/repository/com/fasterxml/jackson/core/jackson-databind/2.6.4/jackson-databind-2.6.4-sources.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/slf4j-api-1.7.12.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/slf4j-log4j12-1.7.12.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-aop-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-aspects-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-beans-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-context-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-context-support-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-core-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-expression-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-instrument-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-instrument-tomcat-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-jdbc-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-jms-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-messaging-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-orm-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-oxm-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-test-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-tx-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-web-4.2.0.RELEASE.jar" sourcepath="D:/maven/repository/org/springframework/spring-web/4.2.0.RELEASE/spring-web-4.2.0.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-webmvc-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-webmvc-portlet-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring4.2/spring-websocket-4.2.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/mongodb3.0/spring-data-mongodb-1.8.2.RELEASE.jar" sourcepath="D:/maven/repository/org/springframework/data/spring-data-mongodb/1.8.2.RELEASE/spring-data-mongodb-1.8.2.RELEASE-sources.jar"/>
+	<classpathentry kind="src" path="src-resources"/>
+	<classpathentry kind="lib" path="libs/other1.0/bean-validator.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/httpclient-4.5.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/httpcore-4.4.1.jar" sourcepath="D:/maven/repository/org/apache/httpcomponents/httpcore/4.4.1/httpcore-4.4.1-sources.jar"/>
+	<classpathentry kind="lib" path="libs/other1.0/httpmime-4.5.jar"/>
+	<classpathentry kind="lib" path="/TcpServer/src"/>
+	<classpathentry kind="lib" path="libs/tcpserver/mina-core-2.0.13.jar"/>
+	<classpathentry kind="lib" path="libs/tcpserver/TcpServer.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
+</classpath>

@@ -3,6 +3,7 @@ package com.ly.activity;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -136,13 +137,18 @@ public class LoginActivity extends Activity implements OnClickListener{
 			@Override
 			public void run() {
 				try {
-					URL url = new URL("http://192.168.1.77:81/index.php/information/" + sysToken + "/user/login");
+					URL url = new URL("http://10.0.2.2:8080/TestService/information/" + sysToken + "/user/login");
 					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					
+					//conn.setRequestProperty("Accept", "application/json"); // 设置接收数据的格式  
+					conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=utf-8"); // 设置发送数据的格式  
 					conn.setDoOutput(true);
 					conn.setRequestMethod("POST");
-					conn.connect();
 
-					OutputStream out = conn.getOutputStream();
+					//conn.connect();
+
+					OutputStreamWriter out = new OutputStreamWriter(  
+		                    conn.getOutputStream(), "UTF-8"); // utf-8编码  
 					
 					JSONObject params = new JSONObject();
 					JSONArray arr = new JSONArray();
@@ -156,8 +162,12 @@ public class LoginActivity extends Activity implements OnClickListener{
 					params.put("page", "1");
 					params.put("pageSize", "10");
 					
+					String a = "{\"pageSize\":\"10\",\"page\":\"1\",\"obj\":\"[{\"password\":\"ttt\",\"username\":\"tt\",\"flag\":0}]\"}";
 					
-					out.write(params.toString().replace("\\", "").getBytes());
+					//Log.i("WeChat", a);
+					String b = "pageSize=10&page=1&obj="+arr.toString();
+					out.write(b);
+					//out.write(params.toString().replace("\\", "").getBytes());
 					Log.i("WeChat", params.toString());
 					out.flush();
 					if (conn.getResponseCode() == 200) {

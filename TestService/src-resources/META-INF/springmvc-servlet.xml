@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"    
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"    
+    xmlns:context="http://www.springframework.org/schema/context"    
+    xmlns:mvc="http://www.springframework.org/schema/mvc"    
+    xsi:schemaLocation="     
+           http://www.springframework.org/schema/beans     
+		   classpath:org/springframework/beans/factory/xml/spring-beans-4.2.xsd 
+           http://www.springframework.org/schema/context
+           classpath:org/springframework/context/config/spring-context-4.2.xsd    
+           http://www.springframework.org/schema/mvc     
+           classpath:org/springframework/web/servlet/config/spring-mvc-4.2.xsd
+   "> 
+           
+   <!-- 自动扫描组件 ,在spring-servlet.xml中只需要扫描所有带@Controller注解的类,在applicationContext也要配置一次,两次配置的区别,包名不一样,这个操作为解决与事物的冲突-->
+	<context:component-scan base-package="com.gykj.controller" >
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+
+	<!-- 如果是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理
+	<mvc:default-servlet-handler/>-->
+	<!-- 由Spring MVC框架自己处理静态资源，允许访问的静态文件 -->
+    <mvc:resources mapping="/file/**" location="/file/" />   
+     
+    <!--  自定义的过滤器 -->
+    <mvc:interceptors>
+    	<bean class="com.gykj.interceptor.CacheAuthInterceptor" />
+	    <bean class="com.gykj.interceptor.AuthInterceptor" />
+    </mvc:interceptors>
+
+    <!--  主要作用于@Controller，激活该模式   下面是一种简写形式，完全可以手动配置替代这种简写形式；  
+         它会自动注册RequestMappingHandlerMapping与RequestMappingHandlerAdapter 两个bean,  是spring MVC为@Controllers分发请求所必须的  -->  
+    <mvc:annotation-driven validator="validator" >
+		<mvc:message-converters register-defaults="true">			
+   		 	<!-- 自定义json转对象的请求信息-->	
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+				 		<value>text/html; charset=UTF-8</value>
+				 		<value>application/json;charset=UTF-8</value>
+				 		<value>application/javascript;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+		<mvc:async-support default-timeout="200000"/> <!-- 设置异步等待时间200秒 -->
+		<!-- 处理请求参数的解析器 
+		<mvc:argument-resolvers>
+			<bean class="com.gykj.interceptor.FromModelMethodArgumentsResolver" />
+		</mvc:argument-resolvers> 
+		--> 
+	</mvc:annotation-driven>
+	
+	<!-- 配置验证 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
+    </bean>
+	
+	<!-- JSP视图文件解析配置 
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>  
+	    <property name="prefix" value="/WEB-INF/view/"/>  
+	    <property name="suffix" value=".jsp"/>  
+	    <property name="viewNames" value="jsp/*"/>  
+	    <property name="order" value="1"/>  
+	</bean>	      
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">  
+	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>  
+	    <property name="prefix" value="/WEB-INF/view/"/>  
+	    <property name="suffix" value=".jsp"/>  
+	    <property name="order" value="2"/>  
+	</bean>  
+	-->  
+    
+    <!-- 上传文件时，配置MultipartResolver处理器 -->  
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+	    <property name="defaultEncoding" value="UTF-8"/>  
+	    <!-- 指定所上传文件的总大小20M,单位字节。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->  
+	    <property name="maxUploadSize" value="20971520"/>
+	</bean>
+	
+    
+  	
+  	<!-- 加载自定义的本地配置文件-->
+  	<bean id="propertyConfigurer" class="com.gykj.PropertyConfigurer">
+    	<property name="locations">
+        	<list>
+            	<value>classpath:ResultCode.properties</value>
+       		</list>
+    	</property>
+	</bean>
+	 
+	
+      
+</beans>
