@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -153,8 +154,8 @@ public class LoginActivity extends Activity implements OnClickListener{
 					JSONObject params = new JSONObject();
 					JSONArray arr = new JSONArray();
 					JSONObject obj = new JSONObject();
-					obj.put("username", username);
-					obj.put("password", password);
+					obj.put("username", "admin");
+					obj.put("password", "fsxf123#@!");
 					obj.put("flag", 0);
 					
 					arr.put(obj);
@@ -184,6 +185,11 @@ public class LoginActivity extends Activity implements OnClickListener{
 						Log.i("WeChat", result);
 
 						JSONObject object = new JSONObject(result);
+						if (object.getJSONArray("result").length() > 0) {
+							Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+							startActivity(intent);
+							LoginActivity.this.finish();
+						}
 						
 					}else {
 						Log.i("WeChat", "∑µªÿ ß∞‹");

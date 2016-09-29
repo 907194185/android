@@ -11,7 +11,7 @@
 
 	
 	<!-- 连接参数配置  credentials="root:root@admin" 连接用户、密码、所在的数据库-->
-	<mongo:mongo-client host="192.168.1.7" port="27020" credentials="root:9527GYKJ.com@admin">
+	<mongo:mongo-client host="192.168.1.7" port="27017" credentials="root:root@admin">
 		<mongo:client-options connect-timeout="5000" max-wait-time="12000" />		
 	</mongo:mongo-client>
 	
