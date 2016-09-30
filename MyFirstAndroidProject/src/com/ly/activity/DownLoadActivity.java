@@ -14,12 +14,14 @@ import android.R.integer;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -84,6 +86,13 @@ public class DownLoadActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.download_activity);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { 
+			Log.i("ww", "aaaaa");
+			//Í¸Ã÷×´Ì¬À¸  
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); 
+			//Í¸Ã÷µ¼º½À¸  
+			//getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);  
+		}
 		initUI();
 
 	}

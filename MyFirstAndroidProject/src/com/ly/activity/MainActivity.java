@@ -1,5 +1,6 @@
 package com.ly.activity;
 
+import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Build;
@@ -26,7 +27,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 
 	private SharedPreferences sp;
 
-	private RelativeLayout homeLayout,wechatLayout,phoneLayout;
+	private RelativeLayout homeLayout,wechatLayout,phoneLayout, topTab;
 	private Fragment homeFragment,wechatFragment,phoneFragment,currentFragment;
 	private ImageView homeImageView;
 	private TextView homeTextView;
@@ -34,20 +35,20 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.fragment_main);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { 
 			Log.i("ww", "aaaaa");
 			//透明状态栏  
-		    getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); 
-		    //透明导航栏  
-		    getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);  
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); 
+			//透明导航栏  
+			//getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);  
 		}
-		
 		sp = getSharedPreferences("wel_setting", MODE_PRIVATE);
 		Editor editor = sp.edit();
 		editor.putInt("VERSION", 1);
 		editor.commit();
-		
+
 		initUI();
 		initTab();
 	}
@@ -56,12 +57,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 		homeLayout = (RelativeLayout) findViewById(R.id.home_layout);
 		wechatLayout = (RelativeLayout) findViewById(R.id.wechat_layout);
 		phoneLayout = (RelativeLayout) findViewById(R.id.phone_layout);
+		topTab = (RelativeLayout) findViewById(R.id.top_tab);
 
 		homeLayout.setOnClickListener(this);
 		wechatLayout.setOnClickListener(this);
 		phoneLayout.setOnClickListener(this);
-		
-		
+		topTab.setOnClickListener(this);
+
 		homeImageView = (ImageView) findViewById(R.id.home_img);
 		homeTextView = (TextView) findViewById(R.id.home_text);
 	}
@@ -143,8 +145,49 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		/*
+		 * 
+		 * add()方法的四个参数，依次是：
+		 * 
+		 * 1、组别，如果不分组的话就写Menu.NONE,
+		 * 
+		 * 2、Id，这个很重要，Android根据这个Id来确定不同的菜单
+		 * 
+		 * 3、顺序，那个菜单现在在前面由这个参数的大小决定
+		 * 
+		 * 4、文本，菜单的显示文本
+		 */
+
+		menu.add(Menu.NONE, Menu.FIRST + 1, 5, "删除").setIcon(
+
+				android.R.drawable.ic_menu_delete);
+
+		// setIcon()方法为菜单设置图标，这里使用的是系统自带的图标，同学们留意一下,以
+
+		// android.R开头的资源是系统提供的，我们自己提供的资源是以R开头的
+
+		menu.add(Menu.NONE, Menu.FIRST + 2, 2, "保存").setIcon(
+
+				android.R.drawable.ic_menu_edit);
+
+		menu.add(Menu.NONE, Menu.FIRST + 3, 6, "帮助").setIcon(
+
+				android.R.drawable.ic_menu_help);
+
+		menu.add(Menu.NONE, Menu.FIRST + 4, 1, "添加").setIcon(
+
+				android.R.drawable.ic_menu_add);
+
+		menu.add(Menu.NONE, Menu.FIRST + 5, 4, "详细").setIcon(
+
+				android.R.drawable.ic_menu_info_details);
+
+		menu.add(Menu.NONE, Menu.FIRST + 6, 3, "发送").setIcon(
+
+				android.R.drawable.ic_menu_send);
+
 		return true;
+
 	}
 
 	@Override
@@ -171,7 +214,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 			break;  
 		case R.id.phone_layout: // 我的  
 			clickTab3Layout();  
-			break;  
+			break;
+		case R.id.top_tab:
+			openOptionsMenu();
+			break;
 		default:  
 			break;  
 		}  
