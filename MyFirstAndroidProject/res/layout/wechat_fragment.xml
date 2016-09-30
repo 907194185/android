@@ -4,27 +4,56 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button 
+    <Button
         android:id="@+id/net_status_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="当前网络状态"/>
+        android:text="当前网络状态" />
+
     <Button
         android:id="@+id/bj_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="选择图片" >
     </Button>
-    
-    <ImageView 
+
+    <ImageView
         android:id="@+id/img_prev"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button 
+        android:layout_height="wrap_content" />
+
+    <Button
         android:id="@+id/upload_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="上传"/>
-    
+        android:text="execute" />
+
+    <ProgressBar
+        android:id="@+id/wechat_pb"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="0" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/wechat_pb_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+    <Button 
+        android:id="@+id/wechat_dialog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:text="弹出对话框"/>
+    <Button 
+        android:id="@+id/wechat_dialog_fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:text="弹出DialogFragment"/>
 
 </LinearLayout>
